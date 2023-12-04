@@ -5,6 +5,7 @@ export {};
 declare global {
    interface Array<T> {
       sum(): number;
+      product(): number;
       max(): number;
       min(): number;
 
@@ -19,6 +20,12 @@ declare global {
 if (!Array.prototype.sum) {
    Array.prototype.sum = function (): number {
       return this.reduce((s, c) => s + c);
+   };
+}
+
+if (!Array.prototype.product) {
+   Array.prototype.product = function (): number {
+      return this.reduce((s, c) => s * c);
    };
 }
 
