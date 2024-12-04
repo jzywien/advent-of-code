@@ -7,7 +7,7 @@ declare global {
       splitAndGroup<T>(converter?: (item: string) => T): T[][];
       lines(keepEmpty?: boolean): string[];
       toMatrix<T>(
-         converter: (val: string) => T,
+         converter?: (val: string) => T,
          rowSeparator?: RegExp | string,
          itemSeparator?: RegExp | string
       ): T[][];

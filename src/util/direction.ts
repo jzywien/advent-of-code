@@ -6,7 +6,7 @@ export const Directions: Record<string, [number, number]> = {
    NE: [1, -1],
    NW: [-1, -1],
    SE: [1, 1],
-   SW: [-1, 0],
+   SW: [-1, 1],
 };
 
 export const DirectionMap: Record<string, [number, number]> = {
