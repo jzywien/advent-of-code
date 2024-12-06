@@ -26,7 +26,7 @@ describe('day 6', () => {
       });
       test('input', () => {
          const result = step2(input);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(1784);
       });
    });
 });
