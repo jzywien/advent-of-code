@@ -1,4 +1,5 @@
 import '@util/polyfills';
+import { iterateGrid } from '@util/grid';
 
 type Position = [number, number];
 type Dimension = [number, number];
@@ -12,15 +13,9 @@ interface Guard {
 }
 
 const findGuard = (grid: string[][]): Guard => {
-   for(let r = 0; r < grid.length; r++) {
-      for(let c = 0; c < grid[r].length; c++) {
-         if (grid[r][c] === '^') {
-            return {
-               position: [r, c],
-               direction: '^'
-            }
-         }
-      }
+   for (let [val, r, c] of iterateGrid(grid)) {
+      if (val !== '^') continue;
+      return { position: [r, c], direction: '^' }
    }
    throw new Error('guard not found');
 }
@@ -54,33 +49,31 @@ export const step2 = (input: string): number => {
    const dim = [grid.length, grid[0].length] as Position;
    let loopsDetected = 0;
 
-   for(let r = 0; r < grid.length; r++) {
-      for(let c = 0; c < grid[r].length; c++) {
-         if (grid[r][c] === '^' || grid[r][c] === '#') continue;
+   for (let [val, r, c] of iterateGrid(grid)) {
+      if (val === '^' || val === '#') continue;
 
-         const gridCopy = input.toMatrix<string>();
-         const guard = findGuard(gridCopy);
-         gridCopy[r][c] = '#';
+      const gridCopy = input.toMatrix<string>();
+      const guard = findGuard(gridCopy);
+      const visited = new Set<string>([`${guard.position[0]},${guard.position[1]},${guard.direction}`]);
 
-         const visited = new Set<string>([`${guard.position[0]},${guard.position[1]},${guard.direction}`]);
-         while(inBounds(dim, guard.position)) {
-            const [dr, dc] = direction.get(guard.direction)!;
-            const [r, c] = guard.position;
-            const [r2, c2] = [r + dr, c + dc];
-            if (!inBounds(dim, [r2, c2])) break;
+      gridCopy[r][c] = '#';
+      while(inBounds(dim, guard.position)) {
+         const [dr, dc] = direction.get(guard.direction)!;
+         const [r, c] = guard.position;
+         const [r2, c2] = [r + dr, c + dc];
+         if (!inBounds(dim, [r2, c2])) break;
 
-            const key = `${r2},${c2},${guard.direction}`;
-            if (visited.has(key)) {
-               loopsDetected++;
-               break;
-            }
+         const key = `${r2},${c2},${guard.direction}`;
+         if (visited.has(key)) {
+            loopsDetected++;
+            break;
+         }
 
-            if (gridCopy[r2][c2] === '#') {
-               guard.direction = turn.get(guard.direction)!;
-            } else {
-               guard.position = [r2, c2];
-               visited.add(key);
-            }
+         if (gridCopy[r2][c2] === '#') {
+            guard.direction = turn.get(guard.direction)!;
+         } else {
+            guard.position = [r2, c2];
+            visited.add(key);
          }
       }
    }

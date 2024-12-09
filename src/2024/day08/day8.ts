@@ -1,17 +1,15 @@
 import '../../util/polyfills';
 import { Point } from '@util/geom';
+import { iterateGrid } from '@util/grid';
 
 const buildAntennaMap = (grid: string[][]): Map<string, Point[]> => {
    const antennaMap = new Map<string, Point[]>();
-   for(let r = 0; r < grid.length; r++) {
-      for (let c = 0; c < grid[0].length; c++) {
-         const antenna = grid[r][c];
-         if (antenna === '.') continue;
-         if (!antennaMap.get(antenna)) antennaMap.set(antenna, []);
-
-         antennaMap.get(antenna)!.push(new Point(r,c));
-      }
+   for (let [antenna, r, c] of iterateGrid(grid)) {
+      if (antenna === '.') continue;
+      if (!antennaMap.get(antenna)) antennaMap.set(antenna, []);
+      antennaMap.get(antenna)!.push(new Point(r,c));
    }
+
    return antennaMap;
 }
 
@@ -44,7 +42,7 @@ export const step2 = (input: string): number => {
    const grid = input.toMatrix<string>();
    const antennaMap = buildAntennaMap(grid);
    const antinodes: Point[] = [];
-   
+
    for(let [antenna, positions] of antennaMap) {
       for(let i = 0; i < positions.length; i++) {
          for(let j = i + 1; j < positions.length; j++) {

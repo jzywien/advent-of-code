@@ -1,5 +1,6 @@
 import '@util/polyfills';
 import { CartesianDirections, DiagonalDirections } from '@util/direction';
+import { iterateGrid } from '@util/grid';
 
 const match = 'XMAS'.split('');
 
@@ -16,15 +17,13 @@ export const step1 = (input: string): number => {
    const grid = input.toMatrix<string>();
 
    let matches = 0;
-   for(let r = 0; r < grid.length; r++) {
-      for(let c = 0; c < grid[r].length; c++) {
-         if (grid[r][c] !== 'X') continue;
-         matches += [...CartesianDirections, ...DiagonalDirections]
-            .filter(dir => findMatchInDirection(grid, r, c, dir))
-            .length
-      }
-   }
+   for (let [val, r, c] of iterateGrid(grid)) {
+      if (val !== 'X') continue;
+      matches += [...CartesianDirections, ...DiagonalDirections]
+         .filter(dir => findMatchInDirection(grid, r, c, dir))
+         .length
 
+   }
    return matches;
 };
 
@@ -32,14 +31,12 @@ export const step2 = (input: string): number => {
    const grid = input.toMatrix<string>();
 
    let matches = 0;
-   for(let r = 0; r < grid.length; r++) {
-      for(let c = 0; c < grid[r].length; c++) {
-         if (grid[r][c] !== 'A') continue;
-         if (r === 0 || c === 0 || r >= grid.length-1 || c >= grid[r].length-1) continue;
-         const ltrDiag = [grid[r-1][c-1], grid[r+1][c+1]].sort().join('');
-         const rtlDiag = [grid[r-1][c+1], grid[r+1][c-1]].sort().join('');
-         matches += (ltrDiag === 'MS' && rtlDiag === 'MS') ? 1 : 0;
-      }
+   for (let [val, r, c] of iterateGrid(grid)) {
+      if (val!== 'A') continue;
+      if (r === 0 || c === 0 || r >= grid.length-1 || c >= grid[r].length-1) continue;
+      const ltrDiag = [grid[r-1][c-1], grid[r+1][c+1]].sort().join('');
+      const rtlDiag = [grid[r-1][c+1], grid[r+1][c-1]].sort().join('');
+      matches += (ltrDiag === 'MS' && rtlDiag === 'MS') ? 1 : 0;
    }
 
    return matches;

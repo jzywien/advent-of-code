@@ -1,5 +1,5 @@
 import { getInput } from '@util/file';
-import { step1, step2 } from '../day06/day6';
+import { step1, step2 } from './day6';
 
 describe('day 6', () => {
    let [input, sample, sample2] = ['', '', ''];
