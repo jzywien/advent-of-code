@@ -22,11 +22,11 @@ describe('day 9', () => {
    describe('step 2', () => {
       test('sample', () => {
          const result = step2(sample);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(2858);
       });
       test('input', () => {
          const result = step2(input);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(6272188244509);
       });
    });
 });
