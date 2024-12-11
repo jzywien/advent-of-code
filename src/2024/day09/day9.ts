@@ -62,13 +62,9 @@ export const step2 = (input: string): number => {
       const emptyNdx = blocks.findIndex((block, ndx) => block.id === '.' && block.size >= size);
       if (emptyNdx === -1 || emptyNdx > i) continue;
 
-      const before = blocks.slice(0, emptyNdx);
-      const after = blocks.slice(emptyNdx);
-      const newBlock = { ...blocks[i] };
-      blocks[i].id = '.';
       blocks[emptyNdx].size -= size;
-      blocks = [...before, newBlock, ...after];
-      ++i;
+      blocks = [...blocks.slice(0, emptyNdx), { ...blocks[i] }, ...blocks.slice(emptyNdx)];
+      blocks[++i].id = '.';
    }
 
    const updates = blocks.flatMap(block => Array(block.size).fill(block.id));
