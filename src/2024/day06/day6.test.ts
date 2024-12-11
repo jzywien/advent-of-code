@@ -2,7 +2,7 @@ import { getInput } from '@util/file';
 import { step1, step2 } from './day6';
 
 describe('day 6', () => {
-   let [input, sample, sample2] = ['', '', ''];
+   let [input, sample] = ['', ''];
    beforeEach(async () => {
       sample = await getInput(__dirname, 'sample');
       input = await getInput(__dirname, 'input');
@@ -25,6 +25,7 @@ describe('day 6', () => {
          expect(result).toEqual(6);
       });
       test('input', () => {
+         // TODO(jzywien): This runs in 16 seconds :(
          const result = step2(input);
          expect(result).toEqual(1784);
       });

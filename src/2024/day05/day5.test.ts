@@ -1,8 +1,6 @@
 import { getInput } from '@util/file';
 import { step1, step2 } from './day5';
 
-const deepCopy = (input: any) => JSON.parse(JSON.stringify(input));
-
 describe('day 5', () => {
    let [input, sample] = ['', ''];
    beforeEach(async () => {

@@ -8,7 +8,6 @@ const parseInput = (input: string) => {
    }
 }
 
-
 const isUpdateInCorrectOrder = (pageOrderMap: Map<number, Set<number>>, update: number[]): boolean => {
    for(let i = 0; i < update.length; i++) {
       const previousPages = new Set(update.slice(0, i));
