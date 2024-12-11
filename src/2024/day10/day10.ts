@@ -3,18 +3,21 @@ import { iterateGrid } from '@util/grid';
 import { CartesianDirections } from '@util/direction';
 import { Point } from '@util/geom';
 
-const navigate = (grid: number[][], r: number, c: number, found: string[]): void => {
-   const val = grid[r][c];
-   if (val === 9) found.push(`${r},${c}`);
-
-   const adjacent = CartesianDirections.reduce((adjList, [dx, dy]) => {
+const findAdjacent = (grid: number[][], r: number, c: number, val: number): Point[] =>
+   CartesianDirections.reduce((adjList, [dx, dy]) => {
       const [dr, dc] = [r + dy, c + dx];
       const next = grid[dr]?.[dc] ?? -1;
       if (next === val + 1) adjList.push(new Point(dr, dc));
       return adjList;
    }, [] as Point[]);
 
+const navigate = (grid: number[][], r: number, c: number, found: string[]): void => {
+   const val = grid[r][c];
+   if (val === 9) found.push(`${r},${c}`);
+
+   const adjacent = findAdjacent(grid, r, c, val);
    if (adjacent.length === 0) return;
+
    adjacent.map(p => navigate(grid, p.x, p.y, found));
 }
 
