@@ -23,24 +23,25 @@ const dictionaryBased = (input: string, steps: number): number => {
    let stoneMap = new Map(stones);
 
    for (let i = 0; i < steps; i++) {
-      const updatedMap = new Map<number, number>();
-      for (let [s, c] of stoneMap) {
+      stoneMap = [...stoneMap.entries()].reduce((updated, [s, c]) => {
          const stoneStr = s.toString();
          if (s === 0) {
-            updatedMap.set(1, (updatedMap.get(1) ?? 0) + c);
+            updated.set(1, (updated.get(1) ?? 0) + c);
+            return updated;
          }
-         else if (stoneStr.length % 2 === 0) {
+
+         if (stoneStr.length % 2 === 0) {
             const mid = Math.floor(stoneStr.length / 2);
             const [a, b] = [Number(stoneStr.slice(0, mid)), Number(stoneStr.slice(-1 * mid))];
-            updatedMap.set(a, (updatedMap.get(a) ?? 0) + c);
-            updatedMap.set(b, (updatedMap.get(b) ?? 0) + c);
+            updated.set(a, (updated.get(a) ?? 0) + c);
+            updated.set(b, (updated.get(b) ?? 0) + c);
+            return updated;
          }
-         else {
-            const newStone = s * 2024;
-            updatedMap.set(newStone, (updatedMap.get(newStone) ?? 0) + c);
-         }
-      }
-      stoneMap = updatedMap;
+
+         const val = s * 2024;
+         updated.set(val, (updated.get(val) ?? 0) + c);
+         return updated;
+      }, new Map<number, number>);
    }
 
    return [...stoneMap.values()].sum();
