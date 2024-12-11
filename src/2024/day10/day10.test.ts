@@ -15,18 +15,18 @@ describe('day 10', () => {
       });
       test('input', () => {
          const result = step1(input);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(611);
       });
    });
 
    describe('step 2', () => {
       test('sample', () => {
          const result = step2(sample);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(81);
       });
       test('input', () => {
          const result = step2(input);
-         expect(result).toEqual(-1);
+         expect(result).toEqual(1380);
       });
    });
 });

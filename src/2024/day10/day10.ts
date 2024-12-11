@@ -1,6 +1,6 @@
 import '@util/polyfills';
 import { iterateGrid } from '@util/grid';
-import { CartesianDirections, Directions } from '@util/direction';
+import { CartesianDirections } from '@util/direction';
 import { Point } from '@util/geom';
 
 const navigate = (grid: number[][], r: number, c: number, found: string[]): void => {
@@ -18,10 +18,8 @@ const navigate = (grid: number[][], r: number, c: number, found: string[]): void
    adjacent.map(p => navigate(grid, p.x, p.y, found));
 }
 
-
-export const step1 = (input: string): number => {
+const solution = (input: string, counter: (found: string[]) => number): number => {
    const grid = input.toMatrix<number>(Number);
-
    let total = 0;
 
    for(let [val, r, c] of iterateGrid(grid)) {
@@ -29,10 +27,14 @@ export const step1 = (input: string): number => {
 
       const found: string[] = [];
       navigate(grid, r, c, found);
-      total += new Set(found).size;
+      total += counter(found);
    }
 
    return total;
-};
+}
 
-export const step2 = (input: string): number => 0;
+export const step1 = (input: string): number =>
+   solution(input, found => new Set(found).size);
+
+export const step2 = (input: string): number =>
+   solution(input, found => found.length);
