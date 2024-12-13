@@ -14,7 +14,6 @@ describe('day 13', () => {
          expect(result).toEqual(480);
       });
       test('input', () => {
-         // TODO(jzywien): Ran in 10.7 seconds :(
          const result = step1(input);
          expect(result).toEqual(31589);
       });
