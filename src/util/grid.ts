@@ -5,3 +5,6 @@ export function* iterateGrid<T>(grid: T[][]): Generator<[T, number, number]> {
       }
    }
 }
+
+export const gridOfSize = <T>(m: number, n: number, d: T): T[][] =>
+   Array.from({ length: m }, () => Array.from({ length: n }, () => d));

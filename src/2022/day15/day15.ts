@@ -12,7 +12,7 @@ const getBeaconsAndSensors = (input: string): [ObjectSet<Circle>, ObjectSet<Poin
             .split(':')
             .map((s: string) => s.match(NUM))
             .map((p) => Point.fromArray(p!));
-         const radius = Point.dist(sensor, beacon);
+         const radius = Point.manhattan(sensor, beacon);
          return [sensors.add(new Circle(sensor, radius)), beacons.add(beacon)];
       },
       [new ObjectSet<Circle>(), new ObjectSet<Point>()]

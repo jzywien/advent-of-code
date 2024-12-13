@@ -15,7 +15,7 @@ export class Circle implements Stringable {
    }
 
    isInsideManhattan(point: Point): boolean {
-      const dist = Point.dist(point, this.center);
+      const dist = Point.manhattan(point, this.center);
       return dist <= this.radius;
    }
 }

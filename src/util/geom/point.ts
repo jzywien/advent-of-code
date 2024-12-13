@@ -24,7 +24,15 @@ export class Point {
    }
 
    static dist(p1: Point, p2: Point): number {
+      return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+   }
+
+   static manhattan(p1: Point, p2: Point): number {
       return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+   }
+
+   static crossProduct(o: Point, a: Point, b: Point) {
+      return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
    }
 
    /**
@@ -67,4 +75,14 @@ export class Point {
    equals(p: Point) {
       return this.x === p.x && this.y === p.y;
    }
+}
+
+export const perimeter = (points: Point[]): number => {
+   let n = points.length;
+   let perimeter = 0.0;
+   for (let i = 0; i < n - 1; i++) {
+      perimeter += Point.dist(points[i], points[i+1]);
+   }
+   perimeter += Point.dist(points[0], points[n-1]);
+   return perimeter;
 }
