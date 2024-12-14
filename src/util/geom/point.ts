@@ -35,6 +35,11 @@ export class Point {
       return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
    }
 
+   add(p: Point) {
+      this.x += p.x;
+      this.y += p.y;
+   }
+
    /**
     * Finds all points between me and input point
     * @param p point to find points between
